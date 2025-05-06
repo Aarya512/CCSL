@@ -1,0 +1,90 @@
+import java.util.Scanner;
+import java.math.BigInteger;
+
+class ccs {
+    int p, q, n, N, e, d;
+
+   
+    public static boolean isPrime(int num) {
+        if (num <= 1) return false;
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) return false;
+        }
+        return true;
+    }
+    static int gcd(int a,int b){
+            if(a==0) return b;
+            return gcd(b%a,a);
+        }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+       
+        System.out.println("Enter value of p (prime number):");
+        int p = sc.nextInt();
+        if (!isPrime(p)) {
+            System.out.println("p is not a prime number. Exiting.");
+            return;
+        }
+
+        System.out.println("Enter value of q (prime number):");
+        int q = sc.nextInt();
+        if (!isPrime(q)) {
+            System.out.println("q is not a prime number. Exiting.");
+            return;
+        }
+
+       
+        int n = p * q;
+        int N = (p - 1) * (q - 1);
+        System.out.println("Value of n is: " + n);
+        System.out.println("Value of N (mod n) is: " + N);
+
+       
+        
+        int e;
+        for(e=2;e<N;e++){
+            if (gcd(e,N)==1){
+                break;
+            }
+        }
+        System.out.println("value of e:"+e);
+
+        
+         int d = 0;
+        for (int i = 0; i <= 9; i++) {
+            int x = 1 + (i * N);
+            if (x % e == 0) {
+                d = x / e;
+                break;
+            }
+        }
+        System.out.println("The value of private key exponent (d) = " + d);
+
+
+       
+        if (d == -1) {
+            System.out.println("Failed to calculate a valid d. Exiting.");
+            return;
+        }
+        System.out.println("Value of d is: " + d);
+
+        System.out.println("Enter the (M):");
+        int m = sc.nextInt();
+        
+        
+        BigInteger C = BigInteger.valueOf(m).pow(e).mod(BigInteger.valueOf(n));
+        System.out.println("Encrypted message (Ciphertext) is: " + C);
+
+        BigInteger msgback = C.pow(d).mod(BigInteger.valueOf(n));
+        System.out.println("Decrypted message is: " + msgback);
+    
+
+
+        
+        
+
+        sc.close();
+    }
+}
