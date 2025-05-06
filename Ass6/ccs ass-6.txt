@@ -1,0 +1,30 @@
+PS C:\Users\chava> cd \xampp\apache
+PS C:\xampp\apache> cd conf
+PS C:\xampp\apache\conf> openssl genrsa -out server.key 2048
+PS C:\xampp\apache\conf> openssl req -new -key server.key -out server.csr
+Can't open "C:\Program Files\Common Files\ssl/openssl.cnf" for reading, No such file or directory
+4C460000:error:80000003:system library:BIO_new_file:No such process:crypto\bio\bss_file.c:67:calling fopen(C:\Program Files\Common Files\ssl/openssl.cnf, r)
+4C460000:error:10000080:BIO routines:BIO_new_file:no such file:crypto\bio\bss_file.c:75:
+PS C:\xampp\apache\conf> openssl req -new -key server.key -out server.csr -config "C:\xampp\apache\conf\openssl.cnf"
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [AU]:IN
+State or Province Name (full name) [Some-State]:Maharashtra
+Locality Name (eg, city) []:Kopargaon
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Sanjivani COE
+Organizational Unit Name (eg, section) []:IT
+Common Name (e.g. server FQDN or YOUR name) []:localhost
+Email Address []:chavanaarya512@gmail.com
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:Sanjivani$1999
+An optional company name []:Sanjivani COE
+PS C:\xampp\apache\conf> openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+Certificate request self-signature ok
+subject=C = IN, ST = Maharashtra, L = Kopargaon, O = Sanjivani COE, OU = IT, CN = localhost, emailAddress = chavanaarya512@gmail.com
